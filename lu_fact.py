@@ -10,9 +10,6 @@ def lu_fact(matrix):
 		for i in range(col, n):
 			if matrix[i][col] != 0:
 				break
-		#matrix[i], matrix[col] = matrix[col], matrix[i]
-		#i_matrix[i], i_matrix[col] = i_matrix[col], i_matrix[i]
-		#i = 0
 		if matrix[i][col] != 0:
 			for k in range(col+1, n):
 				if matrix[k][col] != 0:
