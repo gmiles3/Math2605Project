@@ -1,3 +1,5 @@
+from numpy import *
+
 def qr_fact_givens(matA):
     n = len(matA)
     rot_list = []
