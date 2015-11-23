@@ -15,10 +15,6 @@ def qr_fact_givens(matA):
         qMat = dot(rot_list[k].transpose(), qMat)
     return (qMat, matA)
 
-# Helper method that builds the rotation matrices
-#
-# @size the number of rows/col of the matrix
-# @return returns the rotational givens matrix
 def build_rot_mat(size,tRow, tCol, x, y):
     #import pdb; pdb.set_trace()
     cs = x / (sqrt(pow(x,2) + pow(y,2)))
