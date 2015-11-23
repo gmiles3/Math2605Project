@@ -19,12 +19,13 @@ def matrixMult(A, B):
 # test cases
 
 def main():
-    arr1 = np.array([[1, 2], [2, 1]])
+    arr1 = np.array([[1, 2], [2, 1], [3, 2]])
     arr2 = np.array([[3, 4],
                      [4, 3]])
 
     answer1 = np.array([[11, 10],
-                        [10, 11]])
+                        [10, 11],
+                        [17, 18]])
 
     print("matrix multiplication answer is:", matrixMult(arr1, arr2))
     print("actual answer should be: ", answer1)
