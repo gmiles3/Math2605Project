@@ -1,14 +1,33 @@
 import numpy as np
 
+
 def matrixMult(A, B):
+    a_rows = len(A)
+    b_cols = len(B[0])
+    b_len = len(B);
 
-	A_Rows = len(A)
-	B_Cols = len(B[0])
-	b_len = len(B);
+    new = np.zeros([a_rows, b_cols], dtype=int)
 
-	new = np.zeros([A_Rows, B_Cols], dtype = int)
+    for x in range(a_rows):
+        for y in range(b_cols):
+            for z in range(b_len):
+                new[x][y] += A[x][z] * B[z][y]
 
-	for x in range(A_Rows):
-		for y in range(B_Cols):
-			for z in range (b_len):
-				new[x][y] += A[x][k] * B[k][j]
+    return new
+
+
+# test cases
+
+def main():
+    arr1 = np.array([[1, 2], [2, 1]])
+    arr2 = np.array([[3, 4],
+                     [4, 3]])
+
+    answer1 = np.array([[11, 10],
+                        [10, 11]])
+
+    print("matrix multiplication answer is:", matrixMult(arr1, arr2))
+    print("actual answer should be: ", answer1)
+
+
+main()
