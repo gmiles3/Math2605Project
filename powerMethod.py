@@ -1,7 +1,4 @@
 from numpy import *
-from numpy import linalg as LA
-from chezMatrixMult import matrixMult
-from find_eigenvalues import find_eigenvalues
 
 # returns a tuple: (approx eigenvalue, approx eigenvector, number of iterations)
 
@@ -14,44 +11,47 @@ from find_eigenvalues import find_eigenvalues
 # @param max = max number of iterations before function fails
 # @return w, v, n = approx eigenvalue, approx eigenvector, number of iterations)
 def power_method(matrix_a, v, tolerance, max):
-    # x, y = LA.eig(matrix_a)
-    x = find_eigenvalues(matrix_a)
-    eigenval = amax(x)
-    print "should be:", eigenval
-    w = array([[1],
-               [0]])
-    w_transpose = transpose(w)
-    pwr_eigenval = 0
+    w_t = array([1,1])
     its = 0
-    n = len(matrix_a)
+    old_eigenvalue = 0
+    eigenvalue = 0
     while its < max:
-        new_vec = matrixMult(matrix_a, v)
-        pwr_eigenval = amax((dot(w_transpose, new_vec) / dot(w_transpose, v)))
-        if (eigenval - pwr_eigenval < tolerance):
-            # "close enough" eigenvalue found
+        new_v = matrixMult(matrix_a, v)
+        print new_v
+        eigenvalue = amax((dot(w_t, new_v)) / dot(w_t, v))
+        if eigenvalue - old_eigenvalue < tolerance:
             break
         else:
             its += 1
-            v = new_vec
+            v = new_v
+            old_eigenvalue = eigenvalue
     if its >= max:
         return None
-    # calculate eigenvector
-    eigenvector = 3 # something idk
-    return (pwr_eigenval, eigenvector, its)
+    else:
+        eigenvector = 2
+        return eigenvalue, eigenvector, its
 
 
 
 
+
+def matrixMult(A, B):
+    A_Rows = A.shape[0]
+    B_Cols = B.shape[1]
+    if (A.shape[1] == B.shape[0]):
+        newMat = zeros([A_Rows, B_Cols], dtype=float)
+        for i in range(0,B_Cols):
+            vecB = B[0:, i:i + 1]
+            for j in range(0,A_Rows):
+                vecA = A[j:j+1, 0:]
+                newMat[j,i] = dot(vecA, vecB)
+        return newMat
 
 def main():
-    #this way gives me errors in matrix multiplication
-    arr1 = ([[3, 1], [2,4]])
-    arr2 = ([[1],
-            [1]])
-    #this way gives me errors in find_eigenvalues
+
     arr1 = array([[3, 1], [2,4]])
     arr2 = array([[1],
-            [1]])
-    print power_method(arr1, arr2, 0.0005, 100)
+                  [1]])
+    print power_method(arr1, arr2, 0.005, 100)
 
 main()
