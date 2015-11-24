@@ -1,5 +1,6 @@
 from numpy import *
 
+# returns a tuple: (approx eigenvalue, approx eigenvector, number of iterations)
 
 
 # Performs Power Method
@@ -34,6 +35,21 @@ def power_method(matrix_a, v, tolerance, max):
         print "its are greater than max"
         return None
     else:
-        eigenvector = 2
+        eigenvector = normalize(new_v)
         return eigenvalue, eigenvector, its
+
+
+# Normalizes a vector
+#
+# @param vector to normalize
+# @return normalized vector
+def normalize(vector):
+    n = len(vector)
+    num = 0
+    for x in range(n):
+        num += (pow(vector[x],2))
+    num = sqrt(num)
+    num = 1/num
+    return multiply(num, vector)
+
 
