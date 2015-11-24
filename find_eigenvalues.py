@@ -25,3 +25,14 @@ def find_determinant(matrix):
 	else:
 		return (matrix[0][0]*matrix[1][1]) - (matrix[1][0]*matrix[0][1])	# else if trivial 2x2, do a*d - b*c
 
+mat = [[1,-7],[-2,-3]]
+print(find_eigenvalues(mat))
+
+def find_norm(matrix):
+	matrix = matrixMult(matrix.transpose(), matrix)
+	lambdas = find_eigenvalues(matrix)
+	max_lambda = 0
+	for l in lambdas:
+		if abs(l) > max_lambda:
+			max_lambda = l
+	return sqrt(max_lambda)
