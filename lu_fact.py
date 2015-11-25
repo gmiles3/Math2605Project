@@ -3,7 +3,7 @@ from numpy import *
 
 def lu_fact(matA):
     n = len(matA)                 # n is # of rows and cols
-    i_matA = identity(n)       # i_matA will be transformed into L via all row operations that create U
+    i_matA = identity(n, float)       # i_matA will be transformed into L via all row operations that create U
     for col in range(0, n):         # for each col
         i = 0                       # initialize i
         for i in range(col, n):     # for each row
