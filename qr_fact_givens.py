@@ -1,6 +1,9 @@
 from numpy import *
+from matrixMult import *
+from pascal_generate import *
 
 def qr_fact_givens(matA):
+    original = matA.copy()
     n = len(matA)                   # n is # of cols and rows
     rot_list = []                   # keep track of all rotation matrices for calculation of Q
     temp = zeros(n)                 # weird error happens if I don't do this
@@ -15,7 +18,15 @@ def qr_fact_givens(matA):
     qMat = rot_list[0].transpose()                          # transpose first rotation matrix
     for k in range(1, len(rot_list)):                       # for each rotation matrix
         qMat = matrixMult(rot_list[k].transpose(), qMat)    # multiply every rotation matrix transposed together
-    return (qMat, matA)     # return Q and R
+
+    derived_A = matrixMult(qMat, matA)        # begin error calculation, compute Q*R
+    derived_A = derived_A - original            # compute QR - A
+    current_max = 0                             # find norm by finding largest abs val of entries
+    for col in range (0, n):                    # for each col
+        for row in range(0, n):                 # for each row
+            if abs(derived_A[row,col]) > current_max:       # if current abs val entry is bigger than max
+                current_max = abs(derived_A[row, col])      # update
+    return [qMat, matA, current_max]    # return Q and R
 
 def build_rot_mat(size,tRow, tCol, x, y):
     #import pdb; pdb.set_trace()
@@ -27,4 +38,6 @@ def build_rot_mat(size,tRow, tCol, x, y):
     rotMat[tCol,tRow] = -sn         # add -sine to rotation matrix
     rotMat[tCol,tCol] = cs          # add cosine to rotation matrix
     return rotMat
+
+
 

@@ -1,0 +1,16 @@
+def factorizationError():
+        houseErrorFile = open('HouseHolderData.txt', 'w')
+        givensErrorFile = open('GivensData.txt','w')
+        lUErrorData = open('lUData.txt','w')
+
+        for i in range(2,13):
+            pascalMat = pascal_generate(i)[0]
+            hhQR = matrixMult(qr_fact_househ(pascalMat)[0], qr_fact_househ(pascalMat)[1]) - pascalMat
+            givQR = matrixMult(qr_fact_givens(pascalMat)[0], qr_fact_givens(pascalMat)[1]) - pascalMat
+            LUMat = matrixMult(lu_fact(pascalMat)[0], lu_fact(pascalMat)[1]) - pascalMat
+            houseErrorFile.write('{} \n'.format(findMax(hhQR)))
+            givensErrorFile.write('{} \n'.format(findMax(givQR)))
+            lUErrorData.write('{} \n'.format(findMax(LUMat)))
+            houseErrorFile.close()
+            givensErrorFile.close()
+            lUErrorData.close()
