@@ -33,7 +33,6 @@ def power_method(matrix_a, v, tolerance, max):
             v = new_v
             old_eigenvalue = eigenvalue
     if its >= max:
-        print "its are greater than max"
         return None
     else:
         eigenvector = normalize(new_v)
