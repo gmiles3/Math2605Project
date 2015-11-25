@@ -9,7 +9,7 @@ def pascal_generate(n):
     b = np.zeros((n, 1), float)            # start with b matrix of 0's
     for i in range(0, n):           # for each row in b
         b[i,0] = 1. / (i + 1)       # calculate b entry
-    return (matrix, b)              # return P and b
+    return [matrix, b]              # return P and b
 
 
 def factorial(num):
