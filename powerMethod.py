@@ -1,9 +1,6 @@
 from numpy import *
 
 
-# returns a tuple: (approx eigenvalue, approx eigenvector, number of iterations)
-
-
 # Performs Power Method
 #
 # @param matrix The matrix to perform power method on
@@ -15,28 +12,28 @@ def power_method(matrix_a, v, tolerance, max):
     n = len(matrix_a)
     w_t = zeros(n)
     i = 0
-    # sets up w to alternate zeros and ones
+    # sets up w to alternate zeros and ones, no matter the size it needs to be
     while i < n:
         if i % 2 == 0:
             w_t[i] = 1
         i += 1
-    its = 1
-    old_eigenvalue = 0
-    eigenvalue = 0
-    while its < max:
-        new_v = matrixMult(matrix_a, v)
-        eigenvalue = amax(divide((dot(w_t, new_v)), dot(w_t, v)))
-        if absolute(subtract(eigenvalue, old_eigenvalue)) < tolerance:
-            break
-        else:
-            its += 1
-            v = new_v
-            old_eigenvalue = eigenvalue
-    if its >= max:
-        return None
-    else:
-        eigenvector = normalize(new_v)
-        return eigenvalue, eigenvector, its
+    its = 0                 # keeps track of iteration number
+    old_eigenvalue = 0      # declaring eigenvalue variable for denominator
+    eigenvalue = 0          # declaring eigenvalue variable for numerator
+    while its < max:                                           # loops while number of its is less than max allowed
+        new_v = matrixMult(matrix_a, v)                        # multiplies matrix with vector to get next vector
+        eigenvalue = amax(divide((dot(w_t, new_v)), dot(w_t, v)))       # (w^t dot v_(n + 1)) / (w^t dot v_n)
+        if absolute(subtract(eigenvalue, old_eigenvalue)) < tolerance:  # checks to see if tolerance parameter is met
+            break                           # if yes, leaves while loop, variables have been changed
+        else:                               # if they're still too far apart:
+            its += 1                        # increments iteration var
+            v = new_v                       # sets v_n equal to v_(n+1)
+            old_eigenvalue = eigenvalue     # sets old eigenvalue to new eigenvalue, so they can be compared next time
+    if its >= max:                              # if iterations exceeded max allowed
+        return None                             # return none
+    else:                                       # if eigenvalue was found
+        eigenvector = normalize(new_v)          # normalizing eigenvalue
+        return eigenvalue, eigenvector, its     # returns eigenvalue, eigenvector, and # of iterations
 
 
 # Normalizes a vector
@@ -44,13 +41,13 @@ def power_method(matrix_a, v, tolerance, max):
 # @param vector to normalize
 # @return normalized vector
 def normalize(vector):
-    n = len(vector)
-    num = 0
-    for x in range(n):
-        num += (pow(vector[x], 2))
-    num = sqrt(num)
-    num = 1 / num
-    return multiply(num, vector)
+    n = len(vector)                     # length of vector
+    num = 0                             # number to add each element of the vector to
+    for x in range(n):                  # going through each element of vector
+        num += (pow(vector[x], 2))      # adding the element squared to the rest of the numbers (... + a^2)
+    num = sqrt(num)                     # taking square root of the sum of all the elements squared
+    num = 1 / num                       # dividing 1 by the square root of the number
+    return multiply(num, vector)        # returning the normalized vector
 
 
 def matrixMult(A, B):
@@ -64,18 +61,3 @@ def matrixMult(A, B):
                 vecA = A[j:j + 1, 0:]
                 newMat[j, i] = dot(vecA, vecB)
         return newMat
-
-
-# #test cases
-# def main():
-#     starting_vector = matrix([[1],
-#                               [1]])
-#
-#     new_matrix = matrix([[0, 1],
-#                          [-2, -3]])
-#     w, v, n = power_method(new_matrix, starting_vector, 0.0005, 100)
-#     print "eigenvalue", w
-#     print "eigenvector: ", v
-#     print "number of iterations: ", n
-#
-# main()
