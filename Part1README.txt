@@ -1,4 +1,4 @@
-Our project utilizes the numpy library for creating and manipulating data structures such as matrices. TO RUN OUR CODE, YOU MUST HAVE NUMPY INSTALLED. Use of other data structures in the place of this numpy matrices (such as lists) will result in program failure and some perplexing error messages. Please instantiate all matrices in the following manner when passing in to functions:
+Our project utilizes the numpy library for creating and manipulating data structures such as matrices. TO RUN OUR CODE, YOU MUST HAVE NUMPY INSTALLED. Use of other data structures in the place of these numpy matrices (such as lists) will result in program failure and some perplexing error messages. Please instantiate all matrices in the following manner when passing into functions:
 	a_matrix = matrix([[a, b, c], [d, e, f], [g, h, i]], float)
 This may seem like overkill, but our group had huge problems trying to integrate code because of slight differences in matrix representation.
 
