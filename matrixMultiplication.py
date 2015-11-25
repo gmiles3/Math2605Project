@@ -19,7 +19,7 @@ def matrixMult(A, B):
 # test cases
 
 def main():
-    arr1 = np.array([[1, 2], [2, 1], [3, 2]])
+    arr1 = np.array([[1, 2], [2, 1]])
     arr2 = np.array([[3, 4],
                      [4, 3]])
 

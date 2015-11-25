@@ -1,5 +1,6 @@
 from numpy import *
 
+
 # returns a tuple: (approx eigenvalue, approx eigenvector, number of iterations)
 
 
@@ -14,18 +15,18 @@ def power_method(matrix_a, v, tolerance, max):
     n = len(matrix_a)
     w_t = zeros(n)
     i = 0
-    #sets up w to alternate zeros and ones
+    # sets up w to alternate zeros and ones
     while i < n:
         if i % 2 == 0:
             w_t[i] = 1
         i += 1
-    its = 0
+    its = 1
     old_eigenvalue = 0
     eigenvalue = 0
     while its < max:
         new_v = matrixMult(matrix_a, v)
-        eigenvalue = amax((dot(w_t, new_v)) / dot(w_t, v))
-        if eigenvalue - old_eigenvalue < tolerance:
+        eigenvalue = amax(divide((dot(w_t, new_v)), dot(w_t, v)))
+        if absolute(subtract(eigenvalue, old_eigenvalue)) < tolerance:
             break
         else:
             its += 1
@@ -47,9 +48,35 @@ def normalize(vector):
     n = len(vector)
     num = 0
     for x in range(n):
-        num += (pow(vector[x],2))
+        num += (pow(vector[x], 2))
     num = sqrt(num)
-    num = 1/num
+    num = 1 / num
     return multiply(num, vector)
 
 
+def matrixMult(A, B):
+    A_Rows = A.shape[0]
+    B_Cols = B.shape[1]
+    if (A.shape[1] == B.shape[0]):
+        newMat = zeros([A_Rows, B_Cols], dtype=float)
+        for i in range(0, B_Cols):
+            vecB = B[0:, i:i + 1]
+            for j in range(0, A_Rows):
+                vecA = A[j:j + 1, 0:]
+                newMat[j, i] = dot(vecA, vecB)
+        return newMat
+
+
+# #test cases
+# def main():
+#     starting_vector = matrix([[1],
+#                               [1]])
+#
+#     new_matrix = matrix([[0, 1],
+#                          [-2, -3]])
+#     w, v, n = power_method(new_matrix, starting_vector, 0.0005, 100)
+#     print "eigenvalue", w
+#     print "eigenvector: ", v
+#     print "number of iterations: ", n
+#
+# main()
