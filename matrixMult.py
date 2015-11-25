@@ -1,3 +1,5 @@
+from numpy import *
+
 def matrixMult(A, B):
     A_Rows = A.shape[0]
     B_Cols = B.shape[1]
