@@ -1,0 +1,79 @@
+def iterationError():
+        # General Var
+        ep = .00005
+        maxIt = 100
+        xAnswer = matrix([[9/190],
+                          [28/475],
+                          [33/475]])
+        kobiGSRatio = 0
+        kobiGSAvgRatioFile = open('JacobiGSRatioAvg.txt', 'w')
+
+        ## Kobi var
+        XNKobiList = []
+        xInitDataFile = open('InitialXData.txt', 'w')
+        xApproxFileKobi = open('ApproximationDataJacobi.txt', 'w')
+        nKobi = open('AverageDataJacobi.txt','w')
+        xDiffKobi = open('InitialApproxDiffJacobi.txt', 'w')
+        XNKobiAvgFile = open('JacobiApproxAvg.txt', 'w')
+        kobiXNAvgErrorFile = open('JacobiXNAvgError.txt', 'w')
+        XNKobiSum = 0
+
+
+
+        ## GS var
+        XNGSList = []
+        xApproxFileGS = open('ApproximationDataGS.txt', 'w')
+        nGS = open('AverageDataGS.txt', 'w')
+        xDiffGS = open('InitialApproxDiffGS.txt', 'w')
+        XNGSAvgFile = open('GSApproxAvg.txt', 'w')
+        gsXNAvgErrorFile = open('GSXNAvgError.txt', 'w')
+
+        XNGSSum = 0
+
+
+        #Store initial Data vectors
+        for i in iDataList:
+            xInitDataFile.write('{}'.format(i))
+
+        for nx in iDataList:
+            kobiXN = jacobi_iter(nx, ep, maxIt)
+            gsXN = gs_iter(nx, ep, maxIt)
+            if kobiXN != None and gsXN != None:
+
+                kobiGSRatio += (kobiXN[1] / float(gsXN[1]))
+
+                # Store Data for Jacobi
+                XNKobiSum += kobiXN[0]
+                XNKobiList.append(kobiXN[0])
+                xDiffKobi.write('{} \n'.format(findMax(kobiXN[0] - xAnswer)))
+                nKobi.write('{} \n'.format(kobiXN[1]))
+                xApproxFileKobi.write('{} \n'.format(kobiXN[0]))
+
+                # Store Data for GS
+                XNGSSum += gsXN[0]
+                XNGSList.append(kobiXN[0])
+                xDiffGS.write('{} \n'.format(findMax(gsXN[0] - xAnswer)))
+                nGS.write('{} \n'.format(gsXN[1]))
+                xApproxFileGS.write('{} \n'.format(gsXN[0]))
+        XNKobiAverage = XNKobiSum / 100
+        XNGSAverage = XNGSSum / 100
+        kobiXNAvgError = findMax(XNKobiAverage - xAnswer)
+        gsXNAvgError = findMax(XNGSAverage - xAnswer)
+        kobiGSRatioAvg = kobiGSRatio / 100.0
+        XNGSAvgFile.write('{} \n'.format(XNGSAverage))
+        XNKobiAvgFile.write(('{} \n'.format(XNKobiAverage)))
+        kobiGSAvgRatioFile.write('{} \n'.format(kobiGSRatioAvg))
+        kobiXNAvgErrorFile.write('{} \n'.format(kobiXNAvgError))
+        gsXNAvgErrorFile.write('{} \n'.format(gsXNAvgError))
+
+        xDiffKobi.close()
+        nKobi.close()
+        xApproxFileKobi.close()
+        xDiffGS.close()
+        nGS.close()
+        xApproxFileGS.close()
+        XNGSAvgFile.close()
+        XNKobiAvgFile.close()
+        kobiGSAvgRatioFile.close()
+        kobiXNAvgErrorFile.close()
+        gsXNAvgErrorFile.close()
