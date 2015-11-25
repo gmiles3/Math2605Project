@@ -33,7 +33,8 @@ solve_qr_b(Q, R, b)
 	Ex: b = matrix([1], [1./2.], [1./3.], [1./4.], ..., )
 
 qr_fact_househ(matrix)
-	- TODO
+	- Input: square numpy matrix
+	- Output: an array of resulting orthogonal matrix Q, upper-triangular matrix R, and error of factorization from use of Householder Reflection matrices (Q -> array[0] ; R -> array[1] ; error -> array[2])
 
 functions from part 1d
 	- TODO
